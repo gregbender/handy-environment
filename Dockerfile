@@ -18,20 +18,11 @@ COPY parse_yaml.sh "$APPDIR/"
 
 RUN chmod 777 -R $APPDIR
 
-RUN apt-get update -y && \
-    apt-get install -y software-properties-common
+RUN apt-get update -y
 
 RUN ["/bin/bash", "-c", "$APPDIR/jdkinstaller.sh"]
 
-RUN apt-get install maven -y && \
-    apt-get install -y unzip && \
-    apt-get install -y wget && \
-    wget https://services.gradle.org/distributions/gradle-4.10.2-bin.zip && \
-    mkdir /opt/gradle && \
-    unzip -d /opt/gradle gradle-4.10.2-bin.zip && \
-    ls /opt/gradle/gradle-4.10.2
-
-ENV PATH=$PATH:/opt/gradle/gradle-4.10.2/bin
+RUN apt-get install maven -y 
 RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR $APPDIR
