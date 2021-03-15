@@ -29,7 +29,7 @@ ENV PATH="/usr/lib/maven/bin:${PATH}"
 RUN curl -o /tmp/tools/jdk.tar.gz -L https://github.com/AdoptOpenJDK/openjdk15-binaries/releases/download/jdk-15.0.2%2B7_openj9-0.24.0/OpenJDK15U-debugimage_x64_linux_openj9_15.0.2_7_openj9-0.24.0.tar.gz && \ 
 	tar -zxvf /tmp/tools/jdk.tar.gz -C /tmp/tools && \ 
 	mkdir /usr/lib/jvm && \ 
-	mv /tmp/tools/jdk-14.0.2+12/* /usr/lib/jvm && \ 
+	mv /tmp/tools/jdk-15.0.2+7-debug-image/* /usr/lib/jvm && \ 
 	rm /tmp/tools/jdk.tar.gz
 
 COPY jdkinstaller.sh "$APPDIR/"
