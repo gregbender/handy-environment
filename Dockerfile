@@ -13,17 +13,28 @@ LABEL maintainer="Huseyin Akdogan <hakdogan@kodcu.com>" \
 COPY s2i $S2IDIR
 RUN chmod 777 -R $S2IDIR
 
+#############################################################################################
+# install maven
+RUN mkdir /tmp/tools && \
+	curl -o /tmp/tools/apache-maven-3.6.3-bin.tar.gz -L https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz && \ 
+	tar -zxvf /tmp/tools/apache-maven-3.6.3-bin.tar.gz -C /tmp/tools && \ 
+	mkdir /usr/lib/maven && \ 
+	mv /tmp/tools/apache-maven-3.6.3/* /usr/lib/maven && \ 
+	rm /tmp/tools/apache-maven-3.6.3-bin.tar.gz
+ENV PATH="/usr/lib/maven/bin:${PATH}"
+
+# install java
+# openj9 java:14
+
+RUN curl -o /tmp/tools/jdk.tar.gz -L https://github.com/AdoptOpenJDK/openjdk15-binaries/releases/download/jdk-15.0.2%2B7_openj9-0.24.0/OpenJDK15U-debugimage_x64_linux_openj9_15.0.2_7_openj9-0.24.0.tar.gz && \ 
+	tar -zxvf /tmp/tools/jdk.tar.gz -C /tmp/tools && \ 
+	mkdir /usr/lib/jvm && \ 
+	mv /tmp/tools/jdk-14.0.2+12/* /usr/lib/jvm && \ 
+	rm /tmp/tools/jdk.tar.gz
+
 COPY jdkinstaller.sh "$APPDIR/"
 COPY parse_yaml.sh "$APPDIR/"
-
 RUN chmod 777 -R $APPDIR
-
-RUN apt-get update -y
-
-RUN ["/bin/bash", "-c", "$APPDIR/jdkinstaller.sh"]
-
-RUN apt-get install maven -y 
-RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR $APPDIR
 
