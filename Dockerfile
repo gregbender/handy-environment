@@ -1,6 +1,5 @@
 FROM registry.access.redhat.com/rhel7/rhel
-
-ARG USER=1001
+USER root
 ARG S2IDIR="/home/s2i"
 ARG APPDIR="/deployments"
 
@@ -17,10 +16,7 @@ RUN chmod 777 -R $S2IDIR
 COPY jdkinstaller.sh "$APPDIR/"
 COPY parse_yaml.sh "$APPDIR/"
 
-RUN useradd $USER \
-    && chown $USER:$USER $APPDIR \
-    && addgroup $USER $USER \
-    && chmod 777 -R $APPDIR
+RUN chmod 777 -R $APPDIR
 
 RUN apt-get update -y && \
     apt-get install -y software-properties-common
@@ -41,7 +37,5 @@ RUN rm -rf /var/lib/apt/lists/*
 WORKDIR $APPDIR
 
 EXPOSE 8080
-
-USER $USER
 
 CMD ["$S2IDIR/bin/run"]
