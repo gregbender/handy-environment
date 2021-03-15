@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM registry.access.redhat.com/rhel7/rhel
 
 ARG USER=1001
 ARG S2IDIR="/home/s2i"
