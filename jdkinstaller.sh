@@ -14,6 +14,8 @@ if [ "$jdk" == "openjdk6" ]; \
         then apt-get install -y openjdk-10-jdk;
     elif [ "$jdk" == "openjdk11" ]; \
         then apt-get install -y openjdk-11-jdk;
+    elif [ "$jdk" == "openjdk15" ]; \
+        then apt-get install -y openjdk-15-jdk;
     elif [ "$jdk" == "oraclejdk6" ]; \
         then echo oracle-java6-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
             add-apt-repository -y ppa:webupd8team/java && \
